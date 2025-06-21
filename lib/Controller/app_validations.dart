@@ -11,7 +11,6 @@ import 'package:simple_product_list_app/product_model.dart';
         print('successful: ${response.statusCode}');
         final body = response.body;
         final List<dynamic> jsonList = jsonDecode(body);
-        print('product image: ${jsonList[0]['image']}');
         final products = jsonList.map((e) => Product.fromJson(e)).toList().cast<Product>();
         return products;
       } else {
@@ -22,5 +21,3 @@ import 'package:simple_product_list_app/product_model.dart';
        throw Exception('failed to load products $e');
     }
   }
-  //why are the images not showing, neither is it showing that the image has an error. the title price are showing too. the correct image is printing to the console too
-

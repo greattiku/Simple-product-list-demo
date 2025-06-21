@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:simple_product_list_app/Controller/app_validations.dart';
+import 'package:simple_product_list_app/Controller/product_controller.dart';
 import 'package:simple_product_list_app/product_card.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
-
+  Home({super.key});
+  final controller = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,7 +76,7 @@ class Home extends StatelessWidget {
         ),
         SizedBox(height: 12,),
         FutureBuilder(
-          future: fetchAllProducts(), 
+          future: controller.getAllProducts(), 
           builder: (context,snapshot){
             if (snapshot.hasData) {
               final products = snapshot.data!;
