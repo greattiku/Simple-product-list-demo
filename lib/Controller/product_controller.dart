@@ -7,7 +7,7 @@ class ProductController extends GetxController {
   final ProductRepository _productRepository;
 
   ProductController(this._productRepository);
-  
+
   Future<List<Product>> getAllProducts() async {
     try {
       final products = await _productRepository.getAllProducts();

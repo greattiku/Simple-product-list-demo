@@ -1,5 +1,6 @@
 import 'product_model.dart';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -20,11 +21,14 @@ class ProductServicesImpl implements ProductServices {
         final products = jsonList.map((e) => Product.fromJson(e)).toList().cast<Product>();
         return products;
       } else {
-        throw Exception('failed to load products');
+        throw Exception('Failed to load products: ${response.statusCode}');
       }
+    } on SocketException catch (e) {
+      print('SocketException: $e');
+      throw Exception('No Internet connection: $e');
     } catch (e) {
       print(e);
       throw Exception('failed to load products $e');
     }
   }
-}
+} 

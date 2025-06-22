@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:simple_product_list_app/Controller/app_validations.dart';
 import 'package:simple_product_list_app/Controller/product_controller.dart';
 import 'package:simple_product_list_app/product_card.dart';
+import 'package:simple_product_list_app/product_model.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final controller = Get.find<ProductController>();
+  late Future<List<Product>> _productsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _productsFuture = controller.getAllProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,8 +89,9 @@ class Home extends StatelessWidget {
           ),
         ),
         SizedBox(height: 12,),
+
         FutureBuilder(
-          future: controller.getAllProducts(), 
+          future: _productsFuture, 
           builder: (context,snapshot){
             if (snapshot.hasData) {
               final products = snapshot.data!;
@@ -103,7 +118,8 @@ class Home extends StatelessWidget {
             } else{
               return Center(child: Text('No products found'));
             }
-        })],
+        })
+        ],
       ),
     );
   }
